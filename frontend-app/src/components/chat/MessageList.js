@@ -2,7 +2,7 @@ import React from 'react';
 import { List, Box, Typography, CircularProgress } from '@mui/material';
 import MessageItem from './MessageItem';
 
-const MessageList = ({ messages, isLoading, mode }) => {
+const MessageList = ({ messages, isLoading, mode, onToggleFavorite }) => {
   const messagesEndRef = React.useRef(null);
 
   const scrollToBottom = () => {
@@ -20,7 +20,8 @@ const MessageList = ({ messages, isLoading, mode }) => {
           <MessageItem 
             key={message.id} 
             message={message} 
-            mode={mode} 
+            mode={mode}
+            onToggleFavorite={onToggleFavorite}
           />
         ))}
         

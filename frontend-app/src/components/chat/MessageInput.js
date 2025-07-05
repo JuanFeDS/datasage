@@ -55,18 +55,20 @@ const MessageInput = ({
         />
         <IconButton 
           type="submit" 
-          color="primary" 
+          color="success"
           disabled={!inputValue.trim() || isLoading}
           sx={{ 
-            bgcolor: 'primary.main',
+            bgcolor: inputValue.trim() ? '#2E8B57' : '#3D6B4A', // Verde brillante cuando hay texto, oscuro cuando no
             color: 'white',
             '&:hover': {
-              bgcolor: 'primary.dark',
+              bgcolor: inputValue.trim() ? '#3CB371' : '#2E4F38', // Verde más claro al pasar el mouse
             },
             '&:disabled': {
               bgcolor: 'action.disabledBackground',
               color: 'action.disabled',
             },
+            transition: 'all 0.2s ease-in-out',
+            transform: inputValue.trim() ? 'scale(1.05)' : 'scale(1)', // Ligero efecto de escala cuando está activo
           }}
         >
           <SendIcon />

@@ -11,7 +11,8 @@ const ChatInterface = ({ mode }) => {
       id: 1, 
       text: '¡Hola! Soy tu asistente de IA. ¿En qué puedo ayudarte hoy?', 
       sender: 'ai',
-      timestamp: new Date()
+      timestamp: new Date(),
+      isFavorite: false
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -33,6 +34,16 @@ const ChatInterface = ({ mode }) => {
     checkConnection();
   }, []);
 
+  const handleToggleFavorite = (messageId) => {
+    setMessages(prevMessages =>
+      prevMessages.map(msg =>
+        msg.id === messageId 
+          ? { ...msg, isFavorite: !msg.isFavorite }
+          : msg
+      )
+    );
+  };
+
   const handleSendMessage = async () => {
     if (inputValue.trim() === '' || isLoading || !isBackendConnected) return;
 
@@ -41,7 +52,8 @@ const ChatInterface = ({ mode }) => {
       id: Date.now(),
       text: inputValue,
       sender: 'user',
-      timestamp: new Date()
+      timestamp: new Date(),
+      isFavorite: false
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -103,7 +115,8 @@ const ChatInterface = ({ mode }) => {
         <MessageList 
           messages={messages} 
           isLoading={isLoading} 
-          mode={mode} 
+          mode={mode}
+          onToggleFavorite={handleToggleFavorite}
         />
       </Paper>
       
