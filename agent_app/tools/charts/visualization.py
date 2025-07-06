@@ -12,8 +12,8 @@ import plotly.graph_objects as go
 
 from langchain_core.tools import tool
 
-from tools.charts.bar_plot import bar_plot
-from tools.charts.histogram import histogram
+from agent_app.tools.charts.bar_plot import bar_plot
+from agent_app.tools.charts.histogram import histogram
 
 class DataVisualizer:
     """
