@@ -3,21 +3,30 @@ import {
   ThemeProvider, 
   createTheme, 
   CssBaseline, 
-  Container, 
   Box, 
   Typography, 
   IconButton,
   Tooltip,
   AppBar,
   Toolbar,
-  Button,
-  Avatar,
-  Fade,
-  styled,
-  alpha
+  Paper,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider
 } from '@mui/material';
-import { Brightness4, Brightness7, AutoAwesome } from '@mui/icons-material';
+import { 
+  Brightness4, 
+  Brightness7, 
+  Inbox as InboxIcon,
+  Star as StarIcon,
+  Send as SendIcon,
+  Delete as DeleteIcon,
+  Folder as FolderIcon
+} from '@mui/icons-material';
 import ChatInterface from './components/ChatInterface';
+import MainLayout from './layouts/MainLayout';
 
 
 const getDesignTokens = (mode) => ({
@@ -166,8 +175,9 @@ function App() {
           zIndex: (theme) => theme.zIndex.drawer + 1,
           backgroundColor: (theme) => 
             theme.palette.mode === 'dark' 
-              ? '#1E1E1E' // Color oscuro del tema
-              : theme.palette.primary.main, // Color primario en modo claro
+              ? 'rgba(30, 30, 30, 0.9)' // Color oscuro con transparencia
+              : `${theme.palette.primary.main}E6`, // Color primario con transparencia
+          backdropFilter: 'blur(8px)',
           boxShadow: 'none',
           borderBottom: (theme) => 
             `1px solid ${theme.palette.mode === 'dark' 
@@ -217,31 +227,52 @@ function App() {
         </Toolbar>
       </AppBar>
       
-      <Box component="main" sx={{
-        width: '100%',
-        flexGrow: 1,
-        pt: '56px', // Altura exacta del header
-        pb: 6,
-        display: 'flex',
-        justifyContent: 'center',
-        minHeight: 'calc(100vh - 56px)'
-      }}>
-        <Container 
-          maxWidth="md" 
-          sx={{
-            pt: 3,
-            display: 'flex',
-            flexDirection: 'column',
-            flex: 1
-          }}
-      >
-        <Fade in={true} timeout={1000}>
-          <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+      <MainLayout
+        leftPanel={
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              Conversaciones
+            </Typography>
+            <Divider />
+            <List>
+              <ListItem button>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary="Bandeja de entrada" />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <StarIcon />
+                </ListItemIcon>
+                <ListItemText primary="Destacados" />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <SendIcon />
+                </ListItemIcon>
+                <ListItemText primary="Enviados" />
+              </ListItem>
+            </List>
+          </Box>
+        }
+        centerPanel={
+          <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             <ChatInterface mode={mode} />
           </Box>
-        </Fade>
-      </Container>
-      </Box>
+        }
+        rightPanel={
+          <Box>
+            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+              Información
+            </Typography>
+            <Divider sx={{ mb: 2 }} />
+            <Typography variant="body2" color="text.secondary">
+              Panel derecho para información adicional o controles.
+            </Typography>
+          </Box>
+        }
+      />
     </ThemeProvider>
   );
 }
