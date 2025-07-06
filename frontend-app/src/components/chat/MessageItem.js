@@ -54,7 +54,9 @@ const MessageItem = ({ message, mode, onToggleFavorite }) => {
           mr: isUser ? 1 : 0,  // 8px de margen a la derecha para mensajes del usuario
           bgcolor: isUser 
             ? 'primary.main' 
-            : mode === 'dark' ? 'rgba(192, 48, 40, 0.9)' : 'rgba(192, 48, 40, 0.1)', // Rojo carmesí con 90% de transparencia en modo oscuro, 10% en modo claro
+            : mode === 'dark' 
+              ? 'rgba(192, 48, 40, 0.9)' 
+              : 'rgba(192, 48, 40, 0.1)',
           color: isUser 
             ? 'primary.contrastText' 
             : 'text.primary',
@@ -67,7 +69,15 @@ const MessageItem = ({ message, mode, onToggleFavorite }) => {
           ),
         }}
       >
-        <Typography variant="body1">{message.text}</Typography>
+        <Typography 
+          variant="body1"
+          sx={{
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word'
+          }}
+        >
+          {message.text}
+        </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 0.5 }}>
           {!isUser && (
             <Tooltip title={message.isFavorite ? "Quitar de favoritos" : "Marcar como favorito"}>
