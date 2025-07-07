@@ -89,29 +89,3 @@ class DatasageAgent:
             if response:
                 yield response.__dict__
 
-# ============================================
-# Métodos auxiliares
-# ============================================
-def new_datasage_agent(
-    prompt: str,
-    tools: list,
-    memory: MemorySaver,
-    session_id: str,
-    model_name: str = 'gpt-4o'
-) -> DatasageAgent:
-    """Crea un agente con el modelo especificado."""
-    return DatasageAgent(
-        memory=memory,
-        session_id=session_id,
-        prompt=prompt,
-        tools=tools,
-        model_name=model_name
-    )
-
-async def run_agent_message_stream(
-    agent: DatasageAgent,
-    message: str
-) -> AsyncIterator[Dict[str, Any]]:
-    """Genera una respuesta en formato de stream."""
-    async for chunk in agent.process_message(message):
-        yield chunk
