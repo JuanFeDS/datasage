@@ -3,7 +3,10 @@ Servicio de chat para interactuar con el agente de IA.
 """
 import sys
 import logging
+from pathlib import Path
 from typing import Any, AsyncGenerator, Dict, Optional
+
+from langgraph.checkpoint.memory import MemorySaver
 
 from dotenv import load_dotenv
 
@@ -27,7 +30,12 @@ class ChatService:
     async def initialize(self) -> None:
         """Inicializa el agente si aún no ha sido creado."""
         if self.agent is None:
-            self.agent = new_datasage_agent()
+            self.agent = new_datasage_agent(
+                prompt=Path('../agent_app/prompts/agent_reader.txt').read_text(encoding='utf-8'),
+                tools=[],
+                memory=MemorySaver(),
+                session_id='default_thread'
+            )
             logger.info("Agente de IA inicializado.")
 
     async def process_message(
@@ -51,7 +59,7 @@ class ChatService:
             await self.initialize()
 
             thread_id = conversation_id
-            response_generator = run_agent_message_stream(self.agent, message, thread_id)
+            response_generator = run_agent_message_stream(self.agent, message)
 
             async for chunk in response_generator:
                 if not isinstance(chunk, dict) or 'type' not in chunk or 'content' not in chunk:
