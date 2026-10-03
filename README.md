@@ -22,6 +22,7 @@ Datasage es una plataforma avanzada de análisis de datos impulsada por IA que t
 ```
 datasage/
 ├── agent-app/           # Aplicación del agente de IA
+├── lumina-app/          # Lumina: EDA visual en el navegador (React + TypeScript)
 ├── backend-app/         # Servicio backend con FastAPI
 │   ├── api/             # Puntos finales de la API
 │   ├── services/        # Lógica de negocio
@@ -35,6 +36,16 @@ datasage/
 │   │   └── App.js       # Componente principal de la aplicación
 │   └── package.json     # Dependencias de Node.js
 └── README.md            # Este archivo
+```
+
+## 🔦 Lumina (`lumina-app/`)
+
+Complemento visual del agente: mientras Datasage responde preguntas sobre los datos por chat, Lumina permite explorarlos a mano en el navegador. Cargas un archivo y obtienes análisis univariado con estadísticos y gráficos según el tipo de variable (numérica, categórica o fecha). Las vistas de análisis bivariado y de reportes están planteadas en el layout, pero todavía no conectadas.
+
+```bash
+cd lumina-app
+npm install
+npm start
 ```
 
 ## 📋 Requisitos Previos
